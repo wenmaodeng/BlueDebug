@@ -1,0 +1,96 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:BlueDebug.ViewModels"
+             x:Class="BlueDebug.Views.ScanView"
+             x:DataType="vm:ScanViewModel">
+  <Grid Background="{StaticResource PageBackgroundBrush}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <!-- Header -->
+    <Grid Grid.Row="0" Margin="20,16">
+      <TextBlock Text="设备扫描" Classes="page-title" />
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12">
+        <PathIcon Data="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" Width="24" Height="24" Foreground="{StaticResource TextSecondaryBrush}" />
+      </StackPanel>
+    </Grid>
+
+    <!-- Scan Status Card -->
+    <Border Grid.Row="1" Classes="card" Margin="16,0">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Ellipse Grid.Column="0" Width="40" Height="40" Fill="{StaticResource PrimaryBrush}" Opacity="0.2" />
+        <PathIcon Grid.Column="0" Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z" Width="24" Height="24" Foreground="{StaticResource PrimaryBrush}" HorizontalAlignment="Center" />
+        <StackPanel Grid.Column="1" Margin="12,0">
+          <TextBlock Text="{Binding ScanStatus}" FontSize="16" FontWeight="SemiBold" Foreground="White" />
+          <TextBlock Text="已发现 12 台设备 · 00:12" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+        </StackPanel>
+        <Button Grid.Column="2" Classes="danger" Content="停止" Command="{Binding ToggleScanCommand}" IsVisible="{Binding IsScanning}" />
+        <Button Grid.Column="2" Classes="primary" Content="扫描" Command="{Binding ToggleScanCommand}" IsVisible="{Binding !IsScanning}" />
+      </Grid>
+    </Border>
+
+    <!-- Filters -->
+    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="16,12" Spacing="8">
+      <Button Classes="tab active" Content="全部" />
+      <Button Classes="tab" Content="可连接" />
+      <Button Classes="tab" Content="名称 ▼" />
+      <Button Classes="tab" Content="RSSI ≥ -70" />
+    </StackPanel>
+
+    <!-- Device List -->
+    <ScrollViewer Grid.Row="3" Margin="16,0,16,8">
+      <ItemsControl ItemsSource="{Binding Devices}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Border Classes="list-item">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Ellipse Grid.RowSpan="3" Width="40" Height="40" Fill="{StaticResource SurfaceBrush}" />
+                <PathIcon Grid.RowSpan="3" Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z" Width="24" Height="24" Foreground="{StaticResource PrimaryBrush}" HorizontalAlignment="Center" />
+
+                <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Name}" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="12,0" />
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding MacAddress}" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" Margin="12,2" />
+                <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" Margin="12,4,0,0" Spacing="8">
+                  <Border Classes="tag-success" IsVisible="{Binding IsConnectable}">
+                    <TextBlock Text="可连接" FontSize="11" Foreground="{StaticResource SuccessBrush}" />
+                  </Border>
+                  <TextBlock Text="{Binding ServiceUuids}" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+                  <TextBlock Text="{Binding Rssi, StringFormat='{}{0} dBm'}" FontSize="16" FontWeight="Bold" Foreground="{StaticResource SuccessBrush}" />
+                  <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4">
+                    <Rectangle Width="4" Height="12" Fill="{StaticResource SuccessBrush}" RadiusX="2" RadiusY="2" Margin="1" />
+                    <Rectangle Width="4" Height="12" Fill="{StaticResource SuccessBrush}" RadiusX="2" RadiusY="2" Margin="1" />
+                    <Rectangle Width="4" Height="12" Fill="{StaticResource SuccessBrush}" RadiusX="2" RadiusY="2" Margin="1" />
+                  </StackPanel>
+                </StackPanel>
+
+                <Button Grid.Column="2" Grid.Row="2" Classes="primary" Content="连接" Command="{Binding #root.DataContext.ConnectCommand}" CommandParameter="{Binding .}" />
+              </Grid>
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

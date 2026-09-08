@@ -1,0 +1,112 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:BlueDebug.ViewModels"
+             x:Class="BlueDebug.Views.DeviceDetailView"
+             x:DataType="vm:DeviceDetailViewModel">
+  <Grid Background="{StaticResource PageBackgroundBrush}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <!-- Header -->
+    <Grid Grid.Row="0" Margin="20,16">
+      <Button Classes="nav-item" HorizontalAlignment="Left" Content="←" Command="{Binding #root.DataContext.GoBackCommand}" />
+      <StackPanel HorizontalAlignment="Center">
+        <TextBlock Text="{Binding Device.Name}" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
+        <TextBlock Text="{Binding Device.MacAddress}" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center" />
+      </StackPanel>
+    </Grid>
+
+    <!-- Stats -->
+    <UniformGrid Grid.Row="1" Columns="4" Margin="16,8">
+      <Border Classes="card-small">
+        <StackPanel>
+          <TextBlock Text="{Binding Rssi}" FontSize="16" FontWeight="Bold" Foreground="{StaticResource SuccessBrush}" HorizontalAlignment="Center" />
+          <TextBlock Text="RSSI dBm" FontSize="10" Foreground="{StaticResource TextTertiaryBrush}" HorizontalAlignment="Center" />
+        </StackPanel>
+      </Border>
+      <Border Classes="card-small">
+        <StackPanel>
+          <TextBlock Text="{Binding Mtu}" FontSize="16" FontWeight="Bold" Foreground="{StaticResource AccentCyanBrush}" HorizontalAlignment="Center" />
+          <TextBlock Text="MTU" FontSize="10" Foreground="{StaticResource TextTertiaryBrush}" HorizontalAlignment="Center" />
+        </StackPanel>
+      </Border>
+      <Border Classes="card-small">
+        <StackPanel>
+          <TextBlock Text="{Binding Phy}" FontSize="16" FontWeight="Bold" Foreground="{StaticResource AccentCyanBrush}" HorizontalAlignment="Center" />
+          <TextBlock Text="PHY" FontSize="10" Foreground="{StaticResource TextTertiaryBrush}" HorizontalAlignment="Center" />
+        </StackPanel>
+      </Border>
+      <Border Classes="card-small">
+        <StackPanel>
+          <TextBlock Text="{Binding Interval}" FontSize="16" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
+          <TextBlock Text="连接间隔" FontSize="10" Foreground="{StaticResource TextTertiaryBrush}" HorizontalAlignment="Center" />
+        </StackPanel>
+      </Border>
+    </UniformGrid>
+
+    <!-- Services -->
+    <ScrollViewer Grid.Row="2" Margin="16,8">
+      <ItemsControl ItemsSource="{Binding DiscoveredServices}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Expander Classes="dark" Margin="0,0,0,8">
+              <Expander.Header>
+                <Grid>
+                  <StackPanel>
+                    <TextBlock Text="{Binding Name}" FontSize="15" FontWeight="SemiBold" Foreground="White" />
+                    <TextBlock Text="{Binding Uuid}" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+                  </StackPanel>
+                  <TextBlock Text="{Binding Type}" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                </Grid>
+              </Expander.Header>
+              <StackPanel>
+                <ItemsControl ItemsSource="{Binding Characteristics}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <Border Background="{StaticResource CardBackgroundSecondaryBrush}" CornerRadius="8" Margin="0,4" Padding="12">
+                        <Grid>
+                          <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                          </Grid.ColumnDefinitions>
+                          <Rectangle Width="3" Fill="{StaticResource PrimaryBrush}" RadiusX="2" Margin="0,0,8,0" />
+                          <StackPanel Grid.Column="1">
+                            <TextBlock Text="{Binding Uuid}" FontSize="11" Foreground="{StaticResource PrimaryBrush}" />
+                            <TextBlock Text="{Binding Name}" FontSize="14" Foreground="White" />
+                          </StackPanel>
+                          <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4">
+                            <Border Classes="tag" IsVisible="{Binding CanRead}">
+                              <TextBlock Text="R" FontSize="10" Foreground="{StaticResource InfoBrush}" />
+                            </Border>
+                            <Border Classes="tag" IsVisible="{Binding CanWrite}">
+                              <TextBlock Text="W" FontSize="10" Foreground="{StaticResource WarningBrush}" />
+                            </Border>
+                            <Border Classes="tag" IsVisible="{Binding CanNotify}">
+                              <TextBlock Text="N" FontSize="10" Foreground="{StaticResource SuccessBrush}" />
+                            </Border>
+                          </StackPanel>
+                        </Grid>
+                      </Border>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+            </Expander>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+
+    <!-- Bottom Actions -->
+    <Grid Grid.Row="3" ColumnDefinitions="*,*,*" Margin="16">
+      <Button Grid.Column="0" Classes="outline" Content="读取全部" Command="{Binding ReadAllCommand}" Margin="4" />
+      <Button Grid.Column="1" Classes="success" Content="订阅全部" Command="{Binding SubscribeAllCommand}" Margin="4" />
+      <Button Grid.Column="2" Classes="danger" Content="断开连接" Command="{Binding DisconnectCommand}" Margin="4" />
+    </Grid>
+  </Grid>
+</UserControl>

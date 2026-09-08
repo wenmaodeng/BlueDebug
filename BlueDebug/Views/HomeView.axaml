@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:BlueDebug.ViewModels"
+             x:Class="BlueDebug.Views.HomeView"
+             x:DataType="vm:HomeViewModel">
+  <Grid Background="{StaticResource PageBackgroundBrush}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <!-- Radar Animation Area -->
+    <Grid Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+      <Ellipse Width="300" Height="300" Stroke="#1E3A5F" StrokeThickness="1" Opacity="0.3" />
+      <Ellipse Width="220" Height="220" Stroke="#1E3A5F" StrokeThickness="1" Opacity="0.5" />
+      <Ellipse Width="140" Height="140" Stroke="#1E3A5F" StrokeThickness="1" Opacity="0.7" />
+      <PathIcon Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z" 
+                Width="64" Height="64" Foreground="White" />
+    </Grid>
+
+    <StackPanel Grid.Row="1" HorizontalAlignment="Center" Spacing="8">
+      <TextBlock Text="BlueDebug" FontSize="40" FontWeight="Light" Foreground="White" HorizontalAlignment="Center" />
+      <TextBlock Text="低功耗蓝牙调试助手" FontSize="16" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center" />
+    </StackPanel>
+
+    <UniformGrid Grid.Row="2" Columns="3" Margin="20,40" VerticalAlignment="Center">
+      <Button Classes="outline" Margin="4" Command="{Binding NavigateToCommand}" CommandParameter="Scan">
+        <TextBlock Text="扫描发现" TextAlignment="Center" />
+      </Button>
+      <Button Classes="outline" Margin="4">
+        <TextBlock Text="GATT调试" TextAlignment="Center" />
+      </Button>
+      <Button Classes="outline" Margin="4">
+        <TextBlock Text="读写订阅" TextAlignment="Center" />
+      </Button>
+      <Button Classes="outline" Margin="4" Command="{Binding NavigateToCommand}" CommandParameter="Console">
+        <TextBlock Text="数据控制台" TextAlignment="Center" />
+      </Button>
+      <Button Classes="outline" Margin="4">
+        <TextBlock Text="OTA升级" TextAlignment="Center" />
+      </Button>
+      <Button Classes="outline" Margin="4">
+        <TextBlock Text="广播模拟" TextAlignment="Center" />
+      </Button>
+    </UniformGrid>
+
+    <StackPanel Grid.Row="3" HorizontalAlignment="Center" Margin="0,20">
+      <TextBlock Text="SCAN · GATT · CHAR · CONSOLE · TOOLS" FontSize="12" Foreground="{StaticResource TextTertiaryBrush}" />
+      <TextBlock Text="v2.4.0 · UI Design Preview" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" HorizontalAlignment="Center" Margin="0,4" />
+    </StackPanel>
+  </Grid>
+</UserControl>

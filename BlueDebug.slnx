@@ -1,0 +1,11 @@
+﻿<Solution>
+  <Project Path="BlueDebug.Android/BlueDebug.Android.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="BlueDebug.Browser/BlueDebug.Browser.csproj" />
+  <Project Path="BlueDebug.Desktop/BlueDebug.Desktop.csproj" />
+  <Project Path="BlueDebug.iOS/BlueDebug.iOS.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="BlueDebug/BlueDebug.csproj" />
+</Solution>

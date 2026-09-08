@@ -1,0 +1,103 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:BlueDebug.ViewModels"
+             x:Class="BlueDebug.Views.CharacteristicView"
+             x:DataType="vm:CharacteristicViewModel">
+  <Grid Background="{StaticResource PageBackgroundBrush}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <!-- Header -->
+    <Grid Grid.Row="0" Margin="20,16">
+      <Button Classes="nav-item" HorizontalAlignment="Left" Content="←" />
+      <StackPanel HorizontalAlignment="Center">
+        <TextBlock Text="Heart Rate Measurement" FontSize="18" FontWeight="Bold" Foreground="White" />
+        <TextBlock Text="0x2A37 · Heart Rate Service" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+      </StackPanel>
+    </Grid>
+
+    <!-- Actions -->
+    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="16,8" Spacing="8">
+      <Button Classes="tab active" Content="READ" />
+      <Button Classes="tab" Content="NOTIFY" />
+      <Button Classes="tab" Content="描述符 ×1" />
+      <ToggleSwitch Classes="dark" IsChecked="{Binding IsNotifying}" />
+    </StackPanel>
+
+    <!-- Data Card -->
+    <Border Grid.Row="2" Classes="card" Margin="16,8">
+      <Grid>
+        <StackPanel>
+          <TextBlock Text="最新值 · 10:24:31.208" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" />
+          <TextBlock Text="{Binding HexValue}" FontSize="24" FontWeight="Bold" Foreground="White" Margin="0,8" />
+          <TextBlock Text="接触已检测 · RR 间期 0.94 s" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" />
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+          <TextBlock Text="72" FontSize="48" FontWeight="Bold" Foreground="{StaticResource SuccessBrush}" />
+          <TextBlock Text="bpm" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Right" />
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- Chart -->
+    <Border Grid.Row="3" Classes="card" Margin="16,8" Height="120">
+      <Grid>
+        <TextBlock Text="心率曲线 · 近30秒" FontSize="12" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Top" />
+        <TextBlock Text="● LIVE" FontSize="11" Foreground="{StaticResource SuccessBrush}" HorizontalAlignment="Right" VerticalAlignment="Top" />
+        <!-- Simple line representation -->
+        <Polyline Points="0,80 30,75 60,78 90,70 120,72 150,65 180,68 210,62 240,60 270,58 300,55" 
+                  Stroke="{StaticResource SuccessBrush}" StrokeThickness="2" VerticalAlignment="Bottom" Margin="0,20" />
+      </Grid>
+    </Border>
+
+    <!-- Logs -->
+    <Border Grid.Row="4" Classes="card" Margin="16,8">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid>
+          <TextBlock Text="接收日志 · Notify" FontSize="14" FontWeight="SemiBold" Foreground="White" />
+          <TextBlock Text="导出 ▼" FontSize="12" Foreground="{StaticResource PrimaryBrush}" HorizontalAlignment="Right" />
+        </Grid>
+        <ScrollViewer Grid.Row="1" Margin="0,8,0,0">
+          <ItemsControl ItemsSource="{Binding HeartRateHistory}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <Grid Margin="0,4">
+                  <TextBlock Text="{Binding Timestamp, StringFormat='{}{0:HH:mm:ss.fff}'}" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" />
+                  <TextBlock Text="RX" FontSize="11" Foreground="{StaticResource SuccessBrush}" Margin="80,0,0,0" />
+                  <TextBlock Text="{Binding RawHex}" FontSize="12" Foreground="{StaticResource AccentCyanBrush}" HorizontalAlignment="Right" />
+                </Grid>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </ScrollViewer>
+      </Grid>
+    </Border>
+
+    <!-- Write -->
+    <Border Grid.Row="5" Classes="card" Margin="16,8">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBlock Text="写入特征 · 0x2A39 控制点" VerticalAlignment="Center" />
+          <Button Classes="tab active" Content="HEX" />
+          <Button Classes="tab" Content="UTF-8" />
+        </StackPanel>
+        <TextBox Grid.Row="1" Classes="dark" Text="{Binding WriteInput}" Margin="0,8" />
+        <Button Grid.Row="1" Classes="primary" Content="发送" HorizontalAlignment="Right" Command="{Binding SendCommand}" />
+      </Grid>
+    </Border>
+  </Grid>
+</UserControl>

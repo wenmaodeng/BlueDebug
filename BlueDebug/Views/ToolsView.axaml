@@ -1,0 +1,90 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:BlueDebug.ViewModels"
+             x:Class="BlueDebug.Views.ToolsView"
+             x:DataType="vm:ToolsViewModel">
+  <Grid Background="{StaticResource PageBackgroundBrush}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <!-- Header -->
+    <Grid Grid.Row="0" Margin="20,16">
+      <TextBlock Text="工具箱" Classes="page-title" />
+      <PathIcon Data="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5Z" Width="24" Height="24" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Right" />
+    </Grid>
+
+    <!-- RSSI Card -->
+    <Border Grid.Row="1" Classes="card" Margin="16,0">
+      <Grid>
+        <StackPanel>
+          <TextBlock Text="RSSI 实时监测" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" />
+          <TextBlock Text="Heart Rate Band · 1次/秒" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" />
+        </StackPanel>
+        <TextBlock Text="{Binding CurrentRssi}" FontSize="24" FontWeight="Bold" Foreground="{StaticResource SuccessBrush}" HorizontalAlignment="Right" />
+      </Grid>
+    </Border>
+
+    <!-- Tools Grid -->
+    <UniformGrid Grid.Row="2" Columns="2" Margin="16" VerticalAlignment="Top">
+      <Border Classes="card" Margin="4" Height="100">
+        <StackPanel VerticalAlignment="Center">
+          <PathIcon Data="M4,10V14H13L9.5,17.5L11.92,19.92L19.84,12L11.92,4.08L9.5,6.5L13,10H4Z" Width="28" Height="28" Foreground="{StaticResource PrimaryBrush}" />
+          <TextBlock Text="MTU 协商" FontSize="14" FontWeight="SemiBold" Foreground="White" Margin="0,8" />
+          <TextBlock Text="当前 247 B" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" />
+        </StackPanel>
+      </Border>
+      <Border Classes="card" Margin="4" Height="100">
+        <StackPanel VerticalAlignment="Center">
+          <PathIcon Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z" Width="28" Height="28" Foreground="{StaticResource AccentPurpleBrush}" />
+          <TextBlock Text="PHY 设置" FontSize="14" FontWeight="SemiBold" Foreground="White" Margin="0,8" />
+          <TextBlock Text="1M / 2M / Coded" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" />
+        </StackPanel>
+      </Border>
+      <Border Classes="card" Margin="4" Height="100">
+        <StackPanel VerticalAlignment="Center">
+          <PathIcon Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z" Width="28" Height="28" Foreground="{StaticResource InfoBrush}" />
+          <TextBlock Text="连接参数" FontSize="14" FontWeight="SemiBold" Foreground="White" Margin="0,8" />
+          <TextBlock Text="间隔 · 延迟 · 超时" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" />
+        </StackPanel>
+      </Border>
+      <Border Classes="card" Margin="4" Height="100">
+        <StackPanel VerticalAlignment="Center">
+          <PathIcon Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z" Width="28" Height="28" Foreground="{StaticResource SuccessBrush}" />
+          <TextBlock Text="广播模拟" FontSize="14" FontWeight="SemiBold" Foreground="White" Margin="0,8" />
+          <TextBlock Text="Peripheral 从机模式" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" />
+        </StackPanel>
+      </Border>
+      <Border Classes="card" Margin="4" Height="100">
+        <StackPanel VerticalAlignment="Center">
+          <PathIcon Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z" Width="28" Height="28" Foreground="{StaticResource WarningBrush}" />
+          <TextBlock Text="OTA 升级" FontSize="14" FontWeight="SemiBold" Foreground="White" Margin="0,8" />
+          <TextBlock Text="DFU 固件烧录" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" />
+        </StackPanel>
+      </Border>
+      <Border Classes="card" Margin="4" Height="100">
+        <StackPanel VerticalAlignment="Center">
+          <PathIcon Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z" Width="28" Height="28" Foreground="{StaticResource AccentCyanBrush}" />
+          <TextBlock Text="数据包统计" FontSize="14" FontWeight="SemiBold" Foreground="White" Margin="0,8" />
+          <TextBlock Text="吞吐率 · 丢包分析" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" />
+        </StackPanel>
+      </Border>
+      <Border Classes="card" Margin="4" Height="100">
+        <StackPanel VerticalAlignment="Center">
+          <PathIcon Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z" Width="28" Height="28" Foreground="{StaticResource ErrorBrush}" />
+          <TextBlock Text="绑定与配对" FontSize="14" FontWeight="SemiBold" Foreground="White" Margin="0,8" />
+          <TextBlock Text="加密 · Bonding 管理" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" />
+        </StackPanel>
+      </Border>
+      <Border Classes="card" Margin="4" Height="100">
+        <StackPanel VerticalAlignment="Center">
+          <PathIcon Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z" Width="28" Height="28" Foreground="{StaticResource TextSecondaryBrush}" />
+          <TextBlock Text="日志导出" FontSize="14" FontWeight="SemiBold" Foreground="White" Margin="0,8" />
+          <TextBlock Text="CSV / HEX / 分享" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" />
+        </StackPanel>
+      </Border>
+    </UniformGrid>
+  </Grid>
+</UserControl>

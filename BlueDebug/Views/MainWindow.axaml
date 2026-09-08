@@ -1,0 +1,13 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:BlueDebug.ViewModels"
+        x:Class="BlueDebug.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="BlueDebug"
+        Background="{StaticResource PageBackgroundBrush}"
+        Width="400" Height="800">
+  <Grid RowDefinitions="*,Auto">
+    <ContentControl Grid.Row="0" Content="{Binding CurrentView}" />
+    <local:BottomNav Grid.Row="1" />
+  </Grid>
+</Window>

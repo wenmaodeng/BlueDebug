@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:BlueDebug.ViewModels"
+             x:Class="BlueDebug.Views.ConsoleView"
+             x:DataType="vm:ConsoleViewModel">
+  <Grid Background="{StaticResource PageBackgroundBrush}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <!-- Header -->
+    <Grid Grid.Row="0" Margin="20,16">
+      <TextBlock Text="控制台" Classes="page-title" />
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12">
+        <PathIcon Data="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16Z" Width="24" Height="24" Foreground="{StaticResource TextSecondaryBrush}" />
+      </StackPanel>
+    </Grid>
+
+    <!-- Stats -->
+    <Border Grid.Row="1" Classes="card" Margin="16,0">
+      <TextBlock Text="TX 1.24 KB · RX 8.63 KB · 12 包/s · 丢包 0%" FontSize="13" Foreground="{StaticResource SuccessBrush}" HorizontalAlignment="Center" />
+    </Border>
+
+    <!-- Filters -->
+    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="16,12" Spacing="8">
+      <Button Classes="tab active" Content="全部" />
+      <Button Classes="tab" Content="TX" />
+      <Button Classes="tab" Content="RX" />
+      <Button Classes="tab" Content="系统" />
+      <Button Classes="tab" Content="HEX ▼" HorizontalAlignment="Right" />
+    </StackPanel>
+
+    <!-- Log List -->
+    <ScrollViewer Grid.Row="3" Margin="16,0">
+      <ItemsControl ItemsSource="{Binding Logs}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Grid Margin="0,4">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock Text="{Binding Timestamp, StringFormat='{}{0:HH:mm:ss.fff}'}" FontSize="11" Foreground="{StaticResource TextTertiaryBrush}" />
+                <TextBlock Text="{Binding Type}" FontSize="11" FontWeight="Bold" 
+                           Foreground="{Binding Type, Converter={StaticResource LogTypeColorConverter}}" />
+                <TextBlock Text="{Binding Uuid}" FontSize="11" Foreground="{StaticResource PrimaryBrush}" />
+              </StackPanel>
+              <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,2">
+                <TextBlock Text="{Binding Data}" FontSize="13" Foreground="{StaticResource AccentCyanBrush}" />
+                <TextBlock Text=" → " FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" />
+                <TextBlock Text="{Binding Description}" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}" />
+              </StackPanel>
+            </Grid>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+
+    <!-- Input -->
+    <Grid Grid.Row="4" ColumnDefinitions="Auto,*,Auto" Margin="16">
+      <Button Classes="tab" Content="HEX" />
+      <TextBox Grid.Column="1" Classes="dark" Text="{Binding InputText}" Margin="8,0" />
+      <Button Grid.Column="2" Classes="primary" Content="发送" Command="{Binding SendCommand}" />
+    </Grid>
+  </Grid>
+</UserControl>
