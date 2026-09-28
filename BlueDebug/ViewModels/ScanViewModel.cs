@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using BlueDebug.Models;
 using BlueDebug.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -49,6 +50,10 @@ public partial class ScanViewModel : ViewModelBase
             IsScanning = true;
             ScanStatus = "正在扫描...";
             await _ble.StartScanAsync();
+            // StartScanAsync 内部会吞掉异常并记录日志，这里以适配器真实状态为准，
+            // 避免蓝牙不可用或权限缺失时按钮一直停留在“停止”状态。
+            IsScanning = _ble.IsScanning;
+            ScanStatus = IsScanning ? "正在扫描..." : "扫描不可用，请检查蓝牙与权限";
         }
     }
 

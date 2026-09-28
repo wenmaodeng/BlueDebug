@@ -2,6 +2,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using BlueDebug.Models;
 using BlueDebug.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace BlueDebug.ViewModels;
@@ -26,6 +28,8 @@ public partial class DeviceDetailViewModel : ViewModelBase
     [ObservableProperty]
     private string _interval = "30 ms";
 
+    public ObservableCollection<Models.BleService> DiscoveredServices => _ble.DiscoveredServices;
+
     public DeviceDetailViewModel(IBleService ble, INavigationService navigation)
     {
         _ble = ble;
@@ -36,6 +40,12 @@ public partial class DeviceDetailViewModel : ViewModelBase
     {
         Device = device;
         Rssi = $"{device.Rssi} dBm";
+    }
+
+    [RelayCommand]
+    private void GoBack()
+    {
+        _navigation.GoBack();
     }
 
     [RelayCommand]

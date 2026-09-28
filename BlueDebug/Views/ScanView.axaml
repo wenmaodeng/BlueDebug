@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:BlueDebug.ViewModels"
              x:Class="BlueDebug.Views.ScanView"
+             x:Name="Root"
              x:DataType="vm:ScanViewModel">
   <Grid Background="{StaticResource PageBackgroundBrush}">
     <Grid.RowDefinitions>
@@ -85,7 +86,9 @@
                   </StackPanel>
                 </StackPanel>
 
-                <Button Grid.Column="2" Grid.Row="2" Classes="primary" Content="连接" Command="{Binding #root.DataContext.ConnectCommand}" CommandParameter="{Binding .}" />
+                <Button Grid.Column="2" Grid.Row="2" Classes="primary" Content="连接"
+                        Command="{Binding #Root.((vm:ScanViewModel)DataContext).ConnectCommand}"
+                        CommandParameter="{Binding .}" />
               </Grid>
             </Border>
           </DataTemplate>

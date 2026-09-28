@@ -1,4 +1,5 @@
 using BlueDebug.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +12,8 @@ public class NavigationService : INavigationService
 
     public ViewModelBase CurrentView { get; private set; } = null!;
 
+    public event EventHandler<ViewModelBase>? OnCurrentViewChanged;
+
     public NavigationService(IServiceProvider services)
     {
         _services = services;
@@ -19,6 +22,15 @@ public class NavigationService : INavigationService
     public void NavigateTo<T>() where T : ViewModelBase
     {
         var vm = _services.GetRequiredService<T>();
+        NavigateTo(vm);
+    }
+
+    public void NavigateTo(Type viewModelType)
+    {
+        if (!typeof(ViewModelBase).IsAssignableFrom(viewModelType))
+            throw new ArgumentException($"{viewModelType} 不是 ViewModelBase", nameof(viewModelType));
+
+        var vm = (ViewModelBase)_services.GetRequiredService(viewModelType);
         NavigateTo(vm);
     }
 
@@ -38,6 +50,4 @@ public class NavigationService : INavigationService
             OnCurrentViewChanged?.Invoke(this, CurrentView);
         }
     }
-
-    public event EventHandler<ViewModelBase>? OnCurrentViewChanged;
 }

@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:BlueDebug.ViewModels"
+             xmlns:local="using:BlueDebug.Views"
              x:Class="BlueDebug.Views.MainView"
              x:DataType="vm:MainWindowViewModel">
   <Grid RowDefinitions="*,Auto">

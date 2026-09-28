@@ -1,18 +1,45 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:BlueDebug"
+             xmlns:vm="using:BlueDebug.ViewModels"
+             xmlns:views="using:BlueDebug.Views"
+             xmlns:conv="using:BlueDebug.Converters"
              x:Class="BlueDebug.App"
              RequestedThemeVariant="Dark">
+  <Application.DataTemplates>
+    <!-- ViewModel -> View 映射，ContentControl 通过这些模板显示当前页面 -->
+    <DataTemplate DataType="vm:HomeViewModel">
+      <views:HomeView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:ScanViewModel">
+      <views:ScanView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:DeviceDetailViewModel">
+      <views:DeviceDetailView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:CharacteristicViewModel">
+      <views:CharacteristicView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:ConsoleViewModel">
+      <views:ConsoleView />
+    </DataTemplate>
+    <DataTemplate DataType="vm:ToolsViewModel">
+      <views:ToolsView />
+    </DataTemplate>
+  </Application.DataTemplates>
+
   <Application.Styles>
     <FluentTheme />
     <StyleInclude Source="avares://BlueDebug/Themes/Theme.axaml" />
-    <StyleInclude Source="avares://BlueDebug/Views/BottomNav.axaml" />
   </Application.Styles>
+
   <Application.Resources>
     <ResourceDictionary>
+      <!-- 颜色画刷随 Theme.axaml 一起加载，这里再合并一份保证页面级 StaticResource 可解析 -->
       <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="avares://BlueDebug/Themes/Colors.axaml" />
       </ResourceDictionary.MergedDictionaries>
+      <conv:LogTypeColorConverter x:Key="LogTypeColorConverter" />
     </ResourceDictionary>
   </Application.Resources>
 </Application>

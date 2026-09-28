@@ -1,10 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <!--If you are willing to use platform-specific APIs, use conditional compilation.
-    See https://docs.avaloniaui.net/docs/guides/platforms/platform-specific-code/dotnet for more details.-->
-    <TargetFramework>net10.0</TargetFramework>
+    <!-- net10.0-windows10.0.17763.0 让 Plugin.BLE 在 Windows 上使用原生 WinRT 蓝牙实现；
+         net10.0 供 macOS/Linux 构建运行（蓝牙不可用时程序会给出提示而非崩溃）。 -->
+    <TargetFrameworks>net10.0;net10.0-windows10.0.17763.0</TargetFrameworks>
     <Nullable>enable</Nullable>
+    <SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net10.0-windows10.0.17763.0'">10.0.17763.0</SupportedOSPlatformVersion>
+    <!-- 允许在 macOS/Linux 上交叉编译 Windows 目标 -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 
   <PropertyGroup>

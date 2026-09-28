@@ -12,6 +12,7 @@ namespace BlueDebug.ViewModels;
 public partial class CharacteristicViewModel : ViewModelBase
 {
     private readonly IBleService _ble;
+    private readonly INavigationService _navigation;
 
     [ObservableProperty]
     private BleCharacteristic? _characteristic;
@@ -33,11 +34,18 @@ public partial class CharacteristicViewModel : ViewModelBase
 
     public ObservableCollection<HeartRateData> HeartRateHistory => _ble.HeartRateHistory;
 
-    public CharacteristicViewModel(IBleService ble)
+    public CharacteristicViewModel(IBleService ble, INavigationService navigation)
     {
         _ble = ble;
+        _navigation = navigation;
         _ble.OnCharacteristicChanged += (s, data) => UpdateValue(data);
         _ble.OnHeartRateUpdated += (s, hr) => ParsedValue = $"心率 {hr.Bpm} bpm";
+    }
+
+    [RelayCommand]
+    private void GoBack()
+    {
+        _navigation.GoBack();
     }
 
     public void LoadCharacteristic(BleCharacteristic ch)

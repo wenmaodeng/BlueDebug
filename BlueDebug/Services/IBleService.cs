@@ -8,11 +8,12 @@ namespace BlueDebug.Services;
 
 public interface IBleService
 {
+    bool IsSupported { get; }
     bool IsScanning { get; }
     bool IsConnected { get; }
     IDevice? ConnectedDevice { get; }
     ObservableCollection<BleDevice> ScannedDevices { get; }
-    ObservableCollection<BleService> DiscoveredServices { get; }
+    ObservableCollection<Models.BleService> DiscoveredServices { get; }
     ObservableCollection<LogEntry> Logs { get; }
     ObservableCollection<HeartRateData> HeartRateHistory { get; }
 

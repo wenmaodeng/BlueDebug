@@ -50,12 +50,14 @@ public partial class App : Application
     {
         services.AddSingleton<IBleService, BleService>();
         services.AddSingleton<INavigationService, NavigationService>();
+        // 页面 ViewModel 统一使用单例：它们共享同一个 BLE 服务上下文，
+        // 同时避免每次导航重复订阅 BLE 事件造成回调累积。
         services.AddSingleton<MainWindowViewModel>();
-        services.AddTransient<HomeViewModel>();
-        services.AddTransient<ScanViewModel>();
-        services.AddTransient<DeviceDetailViewModel>();
-        services.AddTransient<CharacteristicViewModel>();
-        services.AddTransient<ConsoleViewModel>();
-        services.AddTransient<ToolsViewModel>();
+        services.AddSingleton<HomeViewModel>();
+        services.AddSingleton<ScanViewModel>();
+        services.AddSingleton<DeviceDetailViewModel>();
+        services.AddSingleton<CharacteristicViewModel>();
+        services.AddSingleton<ConsoleViewModel>();
+        services.AddSingleton<ToolsViewModel>();
     }
 }

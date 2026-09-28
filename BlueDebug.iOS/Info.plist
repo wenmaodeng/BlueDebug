@@ -10,6 +10,8 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>BlueDebug 需要使用蓝牙以扫描、连接并调试低功耗蓝牙设备</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
